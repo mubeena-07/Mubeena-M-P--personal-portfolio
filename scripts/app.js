@@ -204,10 +204,10 @@ function render() {
                     Interested in my complete professional journey? Check out my resume for details on my experience, research, and technical background.
                 </p>
                 <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-                    <a href="assets/docs/resume.pdf" target="_blank" class="btn btn-primary">
+                    <a href="https://drive.google.com/file/d/1RF1rJlI6p6ovEJEcPzEfPaK5FqsBv_26/view?usp=drive_link" target="_blank" class="btn btn-primary">
                         <i data-lucide="eye"></i> View Resume
                     </a>
-                    <a href="assets/docs/resume.pdf" download="Mubeena_M_P_Resume.pdf" class="btn btn-outline">
+                    <a href="https://drive.google.com/uc?export=download&id=1RF1rJlI6p6ovEJEcPzEfPaK5FqsBv_26" class="btn btn-outline">
                          <i data-lucide="download"></i> Download
                     </a>
                     <a href="#contact" class="btn btn-outline">
