@@ -204,8 +204,11 @@ function render() {
                     Interested in my complete professional journey? Check out my resume for details on my experience, research, and technical background.
                 </p>
                 <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-                    <a href="#" class="btn btn-primary" onclick="alert('In a real deployment, this would download the PDF file!'); return false;">
-                        <i data-lucide="download"></i> Download CV
+                    <a href="assets/docs/resume.pdf" target="_blank" class="btn btn-primary">
+                        <i data-lucide="eye"></i> View Resume
+                    </a>
+                    <a href="assets/docs/resume.pdf" download="Mubeena_M_P_Resume.pdf" class="btn btn-outline">
+                         <i data-lucide="download"></i> Download
                     </a>
                     <a href="#contact" class="btn btn-outline">
                         <i data-lucide="user-check"></i> Hire Me
@@ -219,29 +222,75 @@ function render() {
     const contact = `
         <section id="contact">
             <h2>Contact Me</h2>
-            <div class="contact-grid">
-                <a href="mailto:${content.contact.email}" class="contact-card">
-                    <i data-lucide="mail" style="font-size:2rem; margin-bottom:1rem;"></i>
-                    <h4>Email</h4>
-                    <small>${content.contact.email}</small>
-                </a>
-                <a href="${content.contact.linkedin}" target="_blank" class="contact-card">
-                    <i data-lucide="linkedin" style="font-size:2rem; margin-bottom:1rem;"></i>
-                    <h4>LinkedIn</h4>
-                    <small>Connect</small>
-                </a>
-                <a href="${content.contact.github}" target="_blank" class="contact-card">
-                    <i data-lucide="github" style="font-size:2rem; margin-bottom:1rem;"></i>
-                    <h4>GitHub</h4>
-                    <small>Follow</small>
-                </a>
-                <a href="https://wa.me/${content.contact.whatsapp.replace('+', '')}" target="_blank" class="contact-card">
-                    <i data-lucide="message-circle" style="font-size:2rem; margin-bottom:1rem;"></i>
-                    <h4>WhatsApp</h4>
-                    <small>Chat</small>
-                </a>
+            <div class="contact-container" style="align-items: flex-start;">
+                <!-- Left: Contact Form -->
+                <div class="contact-form-container" data-aos="fade-right">
+                    <form 
+                        action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSft3rCnHQ1eJDzCAPJUtTn7od_41vDfaneZFx8pVZvrhBKrYw/formResponse" 
+                        method="POST" 
+                        target="hidden_iframe" 
+                        onsubmit="submitted=true;"
+                        class="contact-form"
+                    >
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="entry.294867332" id="name" class="form-input" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="entry.1842503748" id="email" class="form-input" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea name="entry.1134294271" id="message" class="form-input" placeholder="How can I help you?" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+                            <i data-lucide="send"></i> Send Message
+                        </button>
+                    </form>
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof submitted !== 'undefined' && submitted) { showThankYouModal(); }"></iframe>
+                </div>
+
+                <!-- Right: Contact Links -->
+                <div class="contact-grid" data-aos="fade-left">
+                    <a href="mailto:${content.contact.email}" class="contact-card">
+                        <i data-lucide="mail" style="font-size:2rem; margin-bottom:1rem;"></i>
+                        <h4>Email</h4>
+                        <small>${content.contact.email}</small>
+                    </a>
+                    <a href="${content.contact.linkedin}" target="_blank" class="contact-card">
+                        <i data-lucide="linkedin" style="font-size:2rem; margin-bottom:1rem;"></i>
+                        <h4>LinkedIn</h4>
+                        <small>Connect</small>
+                    </a>
+                    <a href="${content.contact.github}" target="_blank" class="contact-card">
+                        <i data-lucide="github" style="font-size:2rem; margin-bottom:1rem;"></i>
+                        <h4>GitHub</h4>
+                        <small>Follow</small>
+                    </a>
+                    <a href="https://wa.me/${content.contact.whatsapp.replace('+', '')}" target="_blank" class="contact-card">
+                        <i data-lucide="message-circle" style="font-size:2rem; margin-bottom:1rem;"></i>
+                        <h4>WhatsApp</h4>
+                        <small>Chat</small>
+                    </a>
+                </div>
             </div>
         </section>
+
+        <!-- Thank You Modal -->
+        <div id="thankYouModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <div class="modal-icon">
+                    <i data-lucide="check" style="font-size: 2rem;"></i>
+                </div>
+                <h3 style="margin-bottom: 0.5rem;">Message Sent!</h3>
+                <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
+                    Thanks for reaching out, ${content.hero.name.split(' ')[0]}! I'll get back to you as soon as possible.
+                </p>
+                <button class="btn btn-primary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
     `;
 
     // 9. Footer
@@ -251,11 +300,58 @@ function render() {
         </footer>
     `;
 
+    // 10. Modal
+    const modal = `
+        <div id="thankYouModal" class="modal">
+            <div class="modal-content">
+                <i data-lucide="check-circle" style="width: 64px; height: 64px; color: var(--primary); margin-bottom: 1.5rem;"></i>
+                <h2>Thank You!</h2>
+                <p>Your message has been sent successfully. I will get back to you soon.</p>
+                <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 2rem;">Close</button>
+            </div>
+        </div>
+    `;
+
     // Assemble
-    app.innerHTML = nav + hero + about + skills + services + projects + resume + contact + footer;
+    app.innerHTML = nav + hero + about + skills + services + projects + resume + contact + footer + modal;
 
     // Re-run icons for dynamically added content
     lucide.createIcons();
+}
+
+// Global variables for form handling
+let submitted = false;
+
+function showThankYouModal() {
+    const modal = document.getElementById('thankYouModal');
+    if (modal) {
+        modal.classList.add('show');
+        // Reset form
+        const form = document.querySelector('.contact-form');
+        if (form) form.reset();
+        submitted = false;
+
+        // Re-initialize icons inside modal
+        lucide.createIcons();
+    } else {
+        // Fallback alert if modal not found
+        alert('Thank you! Your message has been sent successfully.');
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('thankYouModal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function (event) {
+    const modal = document.getElementById('thankYouModal');
+    if (event.target == modal) {
+        closeModal();
+    }
 }
 
 // Run
